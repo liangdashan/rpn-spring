@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppTest {
 
 	@Autowired
-	DaemonAppTest DA;
+	DaemonApp DA;
 	
 	@Test
 	public void test() {
