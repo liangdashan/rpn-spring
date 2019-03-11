@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd   
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
+
+	<bean id="RpnController"
+		class="com.airwallex.spring.rpn.controller.RpnController"></bean>
+	<!-- 引入切面类 -->
+	<bean id="rpnAspect"
+		class="com.airwallex.spring.rpn.aspect.RpnExceptionHandler"></bean>
+	<bean id="daemonapp" class="com.airwallex.spring.rpn.DaemonApp"></bean>
+	<aop:config>
+		<aop:aspect ref="rpnAspect">
+			<aop:pointcut
+				expression="execution(* com.airwallex.spring.rpn.controller.RpnController.*(..))"
+				id="rpncut" />
+			<aop:around method="handlerControllerMethod"
+				pointcut-ref="rpncut" />
+		</aop:aspect>
+	</aop:config>
+
+	<bean id="mutli"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateMultiServiceImpl"></bean>
+	<bean id="clear"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateClearServiceImpl"></bean>
+	<bean id="minus"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateMinusServiceImpl"></bean>
+	<bean id="plus"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperatePlusServiceImpl"></bean>
+	<bean id="div"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateDivServiceImpl"></bean>
+	<bean id="undo"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateUndoServiceImpl"></bean>
+	<bean id="number"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateNumberServiceImpl"></bean>
+		<bean id="sqrt"
+		class="com.airwallex.spring.rpn.service.impl.RpnOperateSqrtServiceImpl"></bean>
+
+<!-- 	<bean id="contest"
+		class="com.airwallex.spring.rpn.controller.RpnControllerTest"></bean>
+
+	<bean id="servicetest"
+		class="com.airwallex.spring.rpn.service.RpnOperatorServiceImplTest"></bean>
+ -->
+</beans>
